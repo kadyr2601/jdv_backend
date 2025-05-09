@@ -10,6 +10,8 @@ class Service(models.Model):
     main_image = models.ImageField(upload_to='services/', verbose_name='Service Image')
     description = models.TextField(verbose_name='Description')
     slug = models.SlugField(max_length=256, verbose_name='Service slug')
+    meta_title = models.CharField(max_length=55, verbose_name="Meta Title")
+    meta_description = models.CharField(max_length=158, verbose_name="Meta Description")
 
     def save(self, *args, **kwargs):
         if not self.slug:

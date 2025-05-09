@@ -19,6 +19,8 @@ class Project(models.Model):
     slug = models.SlugField(max_length=256, verbose_name='Project slug')
     card_image = models.ImageField(upload_to='projects', verbose_name='Project card image')
     banner_image = models.ImageField(upload_to='gallery', verbose_name='Banner image')
+    meta_title = models.CharField(max_length=55, verbose_name="Meta Title")
+    meta_description = models.CharField(max_length=158, verbose_name="Meta Description")
 
     def save(self, *args, **kwargs):
         if not self.slug:
