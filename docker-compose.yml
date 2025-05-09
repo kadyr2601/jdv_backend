@@ -10,4 +10,4 @@ services:
       - .:/app
     ports:
       - "8000:8000"
-    command: gunicorn jdv_backend_config.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn --workers 3 jdv_backend_config.wsgi:application --bind 0.0.0.0:8000

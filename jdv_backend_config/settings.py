@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-=l4a(rpwrrjc(y)^4djnzt6dhc+5o5nsfzg7spe)!b4ff&ld+f
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['site-preview.site']
+ALLOWED_HOSTS = ['www.site-preview.site', 'site-preview.site', '127.0.0.1']
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -118,6 +118,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://jdv.ae",
     "https://site-preview.site",
+    "https://www.site-preview.site",
 ]
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
@@ -126,4 +127,5 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "https://jdv.ae",
     "https://site-preview.site",
+    "https://www.site-preview.site",
 ]

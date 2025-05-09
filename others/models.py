@@ -16,12 +16,12 @@ class SEOData(models.Model):
         verbose_name="Select page"
     )
 
-    meta_title = models.CharField(max_length=70, verbose_name="Meta Title")
-    meta_description = models.CharField(max_length=1052, verbose_name="Meta Description")
-    meta_keywords = models.CharField(max_length=255, blank=True, verbose_name="Meta Keywords (через запятую)")
+    meta_title = models.CharField(max_length=55, verbose_name="Meta Title")
+    meta_description = models.CharField(max_length=158, verbose_name="Meta Description")
+    meta_keywords = models.CharField(max_length=158, blank=True, verbose_name="Meta Keywords (через запятую)")
 
-    og_title = models.CharField(max_length=95, blank=True, verbose_name="OG Title")
-    og_description = models.CharField(max_length=300, blank=True, verbose_name="OG Description")
+    og_title = models.CharField(max_length=55, blank=True, verbose_name="OG Title")
+    og_description = models.CharField(max_length=158, blank=True, verbose_name="OG Description")
     og_image = models.ImageField(upload_to='seo/og_images/', blank=True, null=True, verbose_name="OG Image")
     og_url = models.URLField(blank=True, verbose_name="OG URL")
 
