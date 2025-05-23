@@ -1,30 +1,25 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from services.models import Service, Maintenance
-from services.serializers import ServiceSerializer, MaintenanceSerializer
+from .models import InteriorDesignService, FitOutService, ArchitectureService
+from .serializers import InteriorDesignServiceSerializer, FitOutServiceSerializer, ArchitectureServiceSerializer
 
 
-class ServicesView(APIView):
+class InteriorDesignServiceView(APIView):
     def get(self, request):
-        services = Service.objects.all()
-        serializer = ServiceSerializer(services, many=True)
+        services = InteriorDesignService.objects.first()
+        serializer = InteriorDesignServiceSerializer(services)
         return Response(serializer.data)
 
 
-class ServiceDetailsView(APIView):
-    def get(self, request, slug):
-        try:
-            # Fetch the Service object
-            service = Service.objects.get(slug=slug)
-            services_serializer = ServiceSerializer(service)
-        except Service.DoesNotExist:
-            return Response({"error": "Service not found"}, status=404)
+class FitOutServiceView(APIView):
+    def get(self, request):
+        services = FitOutService.objects.first()
+        serializer = FitOutServiceSerializer(services)
+        return Response(serializer.data)
 
-        # Fetch related Maintenances
-        maintenances = Maintenance.objects.filter(service=service)
-        maintenances_serializer = MaintenanceSerializer(maintenances, many=True)
 
-        return Response({
-            'service': services_serializer.data,
-            'maintenances': maintenances_serializer.data
-        })
+class ArchitectureServiceView(APIView):
+    def get(self, request):
+        services = ArchitectureService.objects.first()
+        serializer = ArchitectureServiceSerializer(services)
+        return Response(serializer.data)

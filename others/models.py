@@ -39,3 +39,25 @@ class MainBanner(models.Model):
 
     class Meta:
         abstract = True
+
+
+class ContactPage(MainBanner, SEOData):
+    banner_slogan = models.CharField(max_length=256, verbose_name='Main Banner slogan')
+    banner_title = models.CharField(max_length=256, verbose_name='Main Banner title')
+    banner_image = models.ImageField(upload_to='contact', verbose_name=' ', null=True, blank=True)
+    location_title = models.CharField(max_length=256, verbose_name='Location Title')
+    location_description = models.TextField(verbose_name='Location Description')
+    call_title = models.CharField(max_length=256, verbose_name='Call Title')
+    call_number = models.CharField(max_length=256, verbose_name='Call Number')
+    email_title = models.CharField(max_length=256, verbose_name='Email Title')
+    email_address = models.EmailField(verbose_name='Email Address')
+    working_hours_title = models.CharField(max_length=256, verbose_name='Working Hours Title')
+    working_hours_description = models.TextField(verbose_name='Working Hours Description')
+    our_location_description = models.TextField(verbose_name='Our Location Description')
+
+    def __str__(self):
+        return 'Contact Page Configurations'
+
+    class Meta:
+        verbose_name = 'Contact Page'
+        verbose_name_plural = 'Contact Page'

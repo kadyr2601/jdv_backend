@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from others.models import SEOData, Feedback
+from others.models import ContactPage, Feedback
 
 
 class FeedbackSerializer(serializers.ModelSerializer):
@@ -8,7 +8,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class SEODataSerializer(serializers.ModelSerializer):
+class ContactPageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = SEOData
+        model = ContactPage
         fields = '__all__'

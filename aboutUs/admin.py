@@ -1,27 +1,9 @@
 from django.contrib import admin
-from aboutUs.models import (MainBanner, WelcomeSection, FounderSection, ServicesSection, ServicesBanner,
-                            OptionalSection, OptionalBanner, FAQSection)
+from aboutUs.models import (Essence, TeamMember, AboutUsPage)
 
-admin.site.register(MainBanner)
-admin.site.register(WelcomeSection)
-admin.site.register(FAQSection)
-admin.site.register(FounderSection)
+admin.site.register(Essence)
+admin.site.register(TeamMember)
 
-class ServicesBannerInline(admin.StackedInline):
-    model = ServicesBanner
-    extra = 3
-
-
-@admin.register(ServicesSection)
-class ServicesSectionAdmin(admin.ModelAdmin):
-    inlines = [ServicesBannerInline,]
-
-
-class OptionalBannerInline(admin.StackedInline):
-    model = OptionalBanner
-    extra = 3
-
-
-@admin.register(OptionalSection)
-class OptionalSectionAdmin(admin.ModelAdmin):
-    inlines = [OptionalBannerInline,]
+@admin.register(AboutUsPage)
+class AboutUsPageAdmin(admin.ModelAdmin):
+    readonly_fields = ["og_title", "og_description"]
