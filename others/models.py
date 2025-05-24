@@ -10,7 +10,7 @@ class SEOData(models.Model):
 
     og_title = models.CharField(max_length=55, blank=True, verbose_name="OG Title")
     og_description = models.CharField(max_length=158, blank=True, verbose_name="OG Description")
-    og_image = models.ImageField(upload_to='seo/og_images/', blank=True, null=True, verbose_name="OG Image")
+    og_image = models.ImageField(upload_to='seo/og_images/', verbose_name="OG Image")
 
     def save(self, *args, **kwargs):
         if not self.og_title:

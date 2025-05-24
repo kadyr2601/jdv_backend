@@ -20,6 +20,13 @@ class InteriorDesignService(MainBanner, SEOData):
     our_methodology_title = models.CharField(max_length=256, verbose_name='Our Methodology Title')
     our_methodology_description = models.TextField(verbose_name='Our Methodology Description')
 
+    def save(self, *args, **kwargs):
+        if self.experience_image:
+            optimized_image = optimize_image(self.experience_image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.experience_image = optimized_image
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return 'Interior Design Page Configurations'
 
@@ -84,6 +91,13 @@ class FitOutService(MainBanner, SEOData):
     specialized_services_description = models.TextField(verbose_name='Specialized Services Description')
     more_information_section_title = models.TextField(verbose_name='Additional Information Title')
     more_information_section_description = models.TextField(verbose_name='Additional Information Description')
+
+    def save(self, *args, **kwargs):
+        if self.about_service_image:
+            optimized_image = optimize_image(self.about_service_image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.about_service_image = optimized_image
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return 'Fit Out Page Configurations'
@@ -192,6 +206,25 @@ class ArchitectureService(MainBanner, SEOData):
     featured_project_area = models.CharField(max_length=256, verbose_name='Featured Project Area')
     featured_project_year = models.CharField(max_length=256, verbose_name='Featured Project Year')
     featured_project_type = models.CharField(max_length=256, verbose_name='Featured Project Type')
+
+    def save(self, *args, **kwargs):
+        if self.our_approach_image:
+            optimized_image = optimize_image(self.our_approach_image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.our_approach_image = optimized_image
+        if self.featured_project_image_big:
+            optimized_image = optimize_image(self.featured_project_image_big, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.featured_project_image_big = optimized_image
+        if self.featured_project_image_small:
+            optimized_image = optimize_image(self.featured_project_image_small, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.featured_project_image_small = optimized_image
+        if self.featured_project_image_small_second:
+            optimized_image = optimize_image(self.featured_project_image_small_second, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.featured_project_image_small_second = optimized_image
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return 'Architecture Page Configurations'
