@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from others.models import MainBanner, SEOData
+from projects.service import optimize_image
 
 
 class ProjectsPage(MainBanner, SEOData):
@@ -30,6 +31,15 @@ class Project(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
+
+        if self.banner_image:
+            optimized_image = optimize_image(self.banner_image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.banner_image = optimized_image
+        if self.cardImage:
+            optimized_image = optimize_image(self.cardImage, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.cardImage = optimized_image
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -43,3 +53,10 @@ class Project(models.Model):
 class ProjectGallery(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     gallery = models.ImageField(upload_to='gallery', verbose_name='Gallery image')
+
+    def save(self, *args, **kwargs):
+        if self.gallery:
+            optimized_image = optimize_image(self.gallery, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.gallery = optimized_image
+        super().save(*args, **kwargs)

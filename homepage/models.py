@@ -1,6 +1,7 @@
 from django.db import models
 from projects.models import Project
 from others.models import MainBanner, SEOData
+from projects.service import optimize_image
 
 
 class Testimonial(models.Model):
@@ -11,6 +12,17 @@ class Testimonial(models.Model):
     stars = models.IntegerField(verbose_name='Stars')
     position = models.CharField(max_length=512, verbose_name='Position')
     background_image = models.ImageField(upload_to='home/testimonials/', verbose_name='Background Image of card')
+
+    def save(self, *args, **kwargs):
+        if self.icon:
+            optimized_image = optimize_image(self.icon, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.icon = optimized_image
+        if self.background_image:
+            optimized_image = optimize_image(self.background_image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.background_image = optimized_image
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return 'Testimonial - {}'.format(self.fullname)
@@ -25,6 +37,13 @@ class StrategySection(models.Model):
     description = models.TextField(verbose_name='Description')
     image = models.ImageField(upload_to='home/strategy/', verbose_name='Upload image')
     stats = models.JSONField(verbose_name='Stats', default=list, help_text='{"value": "data", "label": "data"},')
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            optimized_image = optimize_image(self.image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.image = optimized_image
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

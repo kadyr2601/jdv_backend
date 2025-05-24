@@ -1,5 +1,6 @@
 from django.db import models
 from others.models import MainBanner, SEOData
+from projects.service import optimize_image
 
 
 class TeamMember(models.Model):
@@ -7,6 +8,13 @@ class TeamMember(models.Model):
     position = models.CharField(max_length=256, verbose_name='Position')
     image = models.ImageField(upload_to='aboutUs/team/', verbose_name='Team Member Image')
     bio = models.TextField(verbose_name='Bio')
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            optimized_image = optimize_image(self.image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.image = optimized_image
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -20,6 +28,13 @@ class Essence(models.Model):
     title = models.CharField(max_length=256, verbose_name='Title')
     content = models.TextField(verbose_name='Content')
     image = models.ImageField(upload_to='aboutUs/essence/', verbose_name='Image')
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            optimized_image = optimize_image(self.image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.image = optimized_image
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -49,6 +64,22 @@ class AboutUsPage(MainBanner, SEOData):
     fit_out_service_image = models.ImageField(upload_to='aboutUs/services/', verbose_name='Fit Out Service Image')
     architecture_service_description = models.TextField(verbose_name='Architecture Service Description')
     architecture_service_image = models.ImageField(upload_to='aboutUs/services/', verbose_name='Architecture Service Image')
+
+    def save(self, *args, **kwargs):
+        if self.interior_design_service_image:
+            optimized_image = optimize_image(self.interior_design_service_image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.interior_design_service_image = optimized_image
+        if self.fit_out_service_image:
+            optimized_image = optimize_image(self.fit_out_service_image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.fit_out_service_image = optimized_image
+        if self.architecture_service_image:
+            optimized_image = optimize_image(self.architecture_service_image, max_size=(1920, 1080), format='WEBP',
+                                             quality=85)
+            if optimized_image:
+                self.architecture_service_image = optimized_image
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return 'About Us Page Configurations'

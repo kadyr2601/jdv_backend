@@ -1,5 +1,6 @@
 from django.db import models
 from others.models import MainBanner, SEOData
+from projects.service import optimize_image
 
 
 class InteriorDesignService(MainBanner, SEOData):
@@ -34,6 +35,13 @@ class Expertise(models.Model):
     image = models.ImageField(upload_to='services/expertise/', verbose_name='Image')
     page = models.ForeignKey(InteriorDesignService, on_delete=models.CASCADE, verbose_name='Page', related_name='expertises')
 
+    def save(self, *args, **kwargs):
+        if self.image:
+            optimized_image = optimize_image(self.image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.image = optimized_image
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.name
 
@@ -48,6 +56,13 @@ class Methodology(models.Model):
     image = models.ImageField(upload_to='services/methodology/', verbose_name='Image')
     page = models.ForeignKey(InteriorDesignService, on_delete=models.CASCADE, verbose_name='Page',
                              related_name='methodologies')
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            optimized_image = optimize_image(self.image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.image = optimized_image
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -84,6 +99,13 @@ class FitOutExpertise(models.Model):
     image = models.ImageField(upload_to='services/fit_out_expertise/', verbose_name='Image')
     page = models.ForeignKey(FitOutService, on_delete=models.CASCADE, verbose_name='Page', related_name='fit_out_expertises')
 
+    def save(self, *args, **kwargs):
+        if self.image:
+            optimized_image = optimize_image(self.image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.image = optimized_image
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
 
@@ -98,6 +120,13 @@ class TransformationProcess(models.Model):
     image = models.ImageField(upload_to='services/transformation_process/', verbose_name='Image')
     page = models.ForeignKey(FitOutService, on_delete=models.CASCADE, verbose_name='Page',
                              related_name='transformation_processes')
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            optimized_image = optimize_image(self.image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.image = optimized_image
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -127,6 +156,13 @@ class MoreInformationSection(models.Model):
     image = models.ImageField(upload_to='services/more_information/', verbose_name='Image')
     page = models.ForeignKey(FitOutService, on_delete=models.CASCADE, verbose_name='Page',
                              related_name='more_information_sections')
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            optimized_image = optimize_image(self.image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.image = optimized_image
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -197,6 +233,13 @@ class ArchitecturalService(models.Model):
     description = models.TextField(verbose_name='Description')
     image = models.ImageField(upload_to='services/architectural_service/', verbose_name='Image')
     page = models.ForeignKey(ArchitectureService, on_delete=models.CASCADE, verbose_name='Page', related_name='architectural_services')
+
+    def save(self, *args, **kwargs):
+        if self.image:
+            optimized_image = optimize_image(self.image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.image = optimized_image
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name

@@ -1,5 +1,7 @@
 from django.db import models
 
+from projects.service import optimize_image
+
 
 class SEOData(models.Model):
     meta_title = models.CharField(max_length=55, verbose_name="Meta Title")
@@ -36,6 +38,13 @@ class Feedback(models.Model):
 class MainBanner(models.Model):
     banner_image = models.ImageField(upload_to='banners', verbose_name='Main Banner image', null=True, blank=True)
     banner_description = models.TextField(verbose_name='Main Banner Description')
+
+    def save(self, *args, **kwargs):
+        if self.banner_image:
+            optimized_image = optimize_image(self.banner_image, max_size=(1920, 1080), format='WEBP', quality=85)
+            if optimized_image:
+                self.banner_image = optimized_image
+        super().save(*args, **kwargs)
 
     class Meta:
         abstract = True
